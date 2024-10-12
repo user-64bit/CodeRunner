@@ -1,11 +1,11 @@
-import mysql from "mysql";
+import mysql from "mysql2";
 
 const db = mysql.createConnection({
-  host: process.env.HOST || "localhost",
-  user: process.env.USER || "root",
-  password: process.env.PASSWORD || "password",
-  database: process.env.DATABASE || "test",
-  port:3306,
+  host: process.env.HOST,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  port: 15227,
 });
 
 db.connect((err) => {

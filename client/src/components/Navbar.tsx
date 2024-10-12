@@ -1,4 +1,4 @@
-// import { Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Button } from "./ui/button"
 
 export const Navbar = () => {
@@ -12,13 +12,13 @@ export const Navbar = () => {
         <p className="font-bold">Code Runner</p>
       </div>
       <div>
-        {/* <Link to={"/all-submissions"}> */}
+        <Link to={"/all-submissions"}>
           <Button
             className="text-white"
             variant={"link"}
             size={"lg"}
           >All Submissiosn</Button>
-        {/* </Link> */}
+        </Link>
       </div>
     </div>
   )

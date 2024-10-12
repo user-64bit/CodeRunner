@@ -5,6 +5,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { Spinner } from "./Spinner";
+import { encode as base64_encode } from 'base-64';
 
 
 const frameworks: {
@@ -42,25 +43,31 @@ export const Home = () => {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    await fetch("http://localhost:8000/submit", {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: "POST", body: JSON.stringify({
-        username,
-        language,
-        codeValue,
-        stdInput,
-      })
-    }).then((res) => res.json()).then((result) => {
-      console.log(result);
+    try {
+      const response = await fetch("http://localhost:8000/submit", {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "POST", body: JSON.stringify({
+          username,
+          language,
+          codeValue: base64_encode(codeValue),
+          stdInput,
+        })
+      });
+      const data = await response;
+      console.log(data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+    finally {
+      setSubmitting(false);
       setCodeValue("");
       setStdInput("");
       setLanguage("");
       setUsername("");
-    }).catch(err => console.log("Error occured: ", err)).finally(() => {
-      setSubmitting(false);
-    });
+    }
   }
 
   return (
