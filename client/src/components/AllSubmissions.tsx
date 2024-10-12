@@ -14,6 +14,34 @@ export const AllSubmissions = () => {
     setSubmissions(data);
   };
 
+  const showSubmissionPopup = ({
+    submissionId,
+    username,
+    language,
+    status,
+    code,
+    stdin,
+    result,
+  }: {
+    submissionId: number;
+    username: string;
+    language: string;
+    status: string;
+    code: string;
+    stdin: string;
+    result: any;
+  }) => {
+    console.log({
+      submissionId,
+      username,
+      language,
+      status,
+      code,
+      stdin,
+      result,
+    });
+  }
+
   if (submissions.length === 0) {
     return (
       <div className="flex items-center justify-center h-64 text-gray-500 text-xl">
@@ -63,7 +91,17 @@ export const AllSubmissions = () => {
                 </td>
                 <td className="py-3 px-6 text-center">
                   <div className="flex item-center justify-center">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                    <button
+                      onClick={() => showSubmissionPopup({
+                        submissionId: submission.id,
+                        username: submission.username,
+                        language: submission.language,
+                        status: submission.status,
+                        code: submission.code,
+                        stdin: submission.stdin,
+                        result: submission.result,
+                      })}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
                       View
                     </button>
                   </div>
