@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ViewButton } from "./ViewButton";
 
 export const AllSubmissions = () => {
   const [submissions, setSubmissions] = useState<any[]>([]);
@@ -9,38 +10,12 @@ export const AllSubmissions = () => {
   }, []);
 
   const fetchAllSubmissions = async () => {
-    const response = await fetch("http://localhost:8000/submissions");
+    const response = await fetch("http://localhost:8000/all-submissions");
     const data = await response.json();
     setSubmissions(data);
   };
 
-  const showSubmissionPopup = ({
-    submissionId,
-    username,
-    language,
-    status,
-    code,
-    stdin,
-    result,
-  }: {
-    submissionId: number;
-    username: string;
-    language: string;
-    status: string;
-    code: string;
-    stdin: string;
-    result: any;
-  }) => {
-    console.log({
-      submissionId,
-      username,
-      language,
-      status,
-      code,
-      stdin,
-      result,
-    });
-  }
+
 
   if (submissions.length === 0) {
     return (
@@ -91,19 +66,7 @@ export const AllSubmissions = () => {
                 </td>
                 <td className="py-3 px-6 text-center">
                   <div className="flex item-center justify-center">
-                    <button
-                      onClick={() => showSubmissionPopup({
-                        submissionId: submission.id,
-                        username: submission.username,
-                        language: submission.language,
-                        status: submission.status,
-                        code: submission.code,
-                        stdin: submission.stdin,
-                        result: submission.result,
-                      })}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
-                      View
-                    </button>
+                    <ViewButton {...submission} />
                   </div>
                 </td>
               </tr>

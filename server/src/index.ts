@@ -16,7 +16,7 @@ app.use(
     methods: ["GET", "POST"],
   })
 );
-const port = process.env.PORT || 8000;
+const port = 8000;
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
