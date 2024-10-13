@@ -16,7 +16,7 @@ app.use(
     methods: ["GET", "POST"],
   })
 );
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -47,6 +47,7 @@ wss.on("connection", (ws: WebSocket) => {
   });
 });
 
+// Endpoints
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to the Code Submission API");
 });
@@ -75,6 +76,41 @@ app.post("/submit", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error in /submit:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/all-submissions", async (req: Request, res: Response) => {
+  try {
+    const submissions: any = await new Promise((resolve, reject) => {
+      db.query("SELECT * FROM submission", (error, results) => {
+        if (error) reject(error);
+        else resolve(results);
+      });
+    });
+    res.status(200).json(submissions);
+  } catch (error) {
+    console.error("Error getting submissions:", error);
+    res.status(400).json({ error: "Error getting submissions" });
+  }
+});
+
+app.get("/delete-submission", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.query;
+    await new Promise((resolve, reject) => {
+      db.query(
+        `DELETE FROM submission WHERE id = ?`,
+        [id],
+        (error, results) => {
+          if (error) reject(error);
+          else resolve(results);
+        }
+      );
+    });
+    res.status(200).json({ message: "Submission deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting submission:", error);
+    res.status(400).json({ error: "Error deleting submission" });
   }
 });
 
@@ -237,20 +273,6 @@ function sendUpdate(submissionId: number, status: string, result: any) {
   }
 }
 
-app.get("/submissions", async (req: Request, res: Response) => {
-  try {
-    const submissions: any = await new Promise((resolve, reject) => {
-      db.query("SELECT * FROM submission", (error, results) => {
-        if (error) reject(error);
-        else resolve(results);
-      });
-    });
-    res.status(200).json(submissions);
-  } catch (error) {
-    console.error("Error getting submissions:", error);
-    res.status(400).json({ error: "Error getting submissions" });
-  }
-});
 
 server.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

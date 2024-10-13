@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 
 interface submissionType {
-  submissionId: number;
+  id: string;
   username: string;
   language: string;
   status: string;
@@ -11,7 +11,7 @@ interface submissionType {
 }
 
 export const ViewButton = ({
-  submissionId,
+  id,
   username,
   language,
   status,
@@ -20,7 +20,7 @@ export const ViewButton = ({
   result,
 }: submissionType) => {
   const showSubmissionPopup = ({
-    submissionId,
+    id,
     username,
     language,
     status,
@@ -29,7 +29,7 @@ export const ViewButton = ({
     result,
   }: submissionType) => {
     console.log({
-      submissionId,
+      id,
       username,
       language,
       status,
@@ -41,7 +41,7 @@ export const ViewButton = ({
   return (
     <Button
       onClick={() => showSubmissionPopup({
-        submissionId,
+        id,
         username,
         language,
         status,
