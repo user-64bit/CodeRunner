@@ -64,7 +64,7 @@ export const ViewButton: React.FC<SubmissionType> = ({
             <Label className="text-sm font-medium">Code</Label>
             <Textarea
               spellCheck="false"
-              className="font-mono text-sm mt-1 focus-visible:ring-0"
+              className="font-mono text-sm mt-1 focuanys-visible:ring-0"
               value={atob(code)}
               readOnly
               placeholder="No code available"
@@ -74,7 +74,7 @@ export const ViewButton: React.FC<SubmissionType> = ({
             <div>
               <Label className="text-sm font-medium">Input</Label>
               <Input
-                value={stdin}
+                value={atob(stdin)}
                 readOnly
                 placeholder="No input"
                 className="mt-1 focus-visible:ring-0"

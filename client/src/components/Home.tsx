@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Combobox } from "./Selection"
+import { Combobox } from "./Selection";
+import { Spinner } from "./Spinner";
+import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { Spinner } from "./Spinner";
-import { encode as base64_encode } from 'base-64';
 
 
 const frameworks: {
@@ -51,8 +50,8 @@ export const Home = () => {
         method: "POST", body: JSON.stringify({
           username,
           language,
-          codeValue: base64_encode(codeValue),
-          stdInput,
+          codeValue: btoa(codeValue),
+          stdInput: btoa(stdInput),
         })
       });
       const data = await response;
