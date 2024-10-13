@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -11,10 +10,11 @@ import {
 } from "@/components/ui/table";
 import { useCallback, useEffect, useState } from "react";
 import { Spinner } from "./Spinner";
+import { StatusBadge } from "./StatusBadge";
 import { ViewButton } from "./ViewButton";
 
 interface SubmissionData {
-  id: string;
+  submissionId: number;
   username: string;
   language: string;
   status: string;
@@ -35,6 +35,7 @@ export const AllSubmissions = () => {
       setSubmissions(data);
     } catch (error) {
       console.error("Error fetching submissions:", error);
+      setSubmissions([]);
     } finally {
       setLoading(false);
     }
@@ -94,8 +95,8 @@ export const AllSubmissions = () => {
             </TableHeader>
             <TableBody>
               {submissions.map((submission) => (
-                <TableRow key={submission.id}>
-                  <TableCell className="font-medium">{submission.id}</TableCell>
+                <TableRow key={submission.submissionId}>
+                  <TableCell className="font-medium">{submission.submissionId}</TableCell>
                   <TableCell>{submission.username}</TableCell>
                   <TableCell>{submission.language}</TableCell>
                   <TableCell>
@@ -107,7 +108,7 @@ export const AllSubmissions = () => {
                   <TableCell className="text-center">
                     <button
                       className="text-red-500 hover:text-red-800 focus:outline-none"
-                      onClick={() => deleteSubmission(submission.id)}
+                      onClick={() => deleteSubmission(submission.submissionId.toString())}
                     >
                       Delete
                     </button>
@@ -122,19 +123,5 @@ export const AllSubmissions = () => {
   );
 };
 
-const StatusBadge = ({ status }: { status: string }) => {
-  const statusConfig: { [key: string]: { color: string; label: string } } = {
-    completed: { color: "bg-green-100 text-green-800", label: "Completed" },
-    pending: { color: "bg-yellow-100 text-yellow-800", label: "Pending" },
-    error: { color: "bg-red-100 text-red-800", label: "Error" },
-  };
-
-  const { color, label } = statusConfig[status?.trim().toLowerCase()] || {
-    color: "bg-gray-100 text-gray-800",
-    label: status || "Unknown",
-  };
-
-  return <Badge className={`${color} font-semibold hover:text-white cursor-pointer`}>{label}</Badge>;
-};
 
 export default AllSubmissions;
