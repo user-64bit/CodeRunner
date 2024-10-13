@@ -83,6 +83,8 @@ app.post("/submit", async (req: Request, res: Response) => {
 });
 
 app.get("/all-submissions", async (req: Request, res: Response) => {
+  const page: number = parseInt(req.query?.page as string) || 1;
+  const limit: number = parseInt(req.query?.limit as string) || 10;
   try {
     const submissions: any = await new Promise((resolve, reject) => {
       db.query("SELECT * FROM submission", (error, results) => {
@@ -90,7 +92,13 @@ app.get("/all-submissions", async (req: Request, res: Response) => {
         else resolve(results);
       });
     });
-    res.status(200).json(submissions);
+    const startIndex= (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedSubmissions = submissions.slice(startIndex, endIndex);
+    res.status(200).json({
+      submissions: paginatedSubmissions,
+      totalPage: Math.ceil(submissions.length / limit),
+    });
   } catch (error) {
     console.error("Error getting submissions:", error);
     res.status(400).json({ error: "Error getting submissions" });

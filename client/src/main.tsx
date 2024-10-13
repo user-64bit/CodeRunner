@@ -7,15 +7,22 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { AllSubmissions } from './components/AllSubmissions.tsx';
+import { Home } from './components/Home.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/all-submissions",
-    element: <AllSubmissions />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/all-submissions",
+        element: <AllSubmissions />,
+      },
+    ]
   },
 ]);
 createRoot(document.getElementById("root")!).render(

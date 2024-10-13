@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Spinner } from "./Spinner";
 import { StatusBadge } from "./StatusBadge";
 import { ViewButton } from "./ViewButton";
+import { PaginationComponent } from "./Pagination";
 
 interface SubmissionData {
   submissionId: number;
@@ -26,24 +27,28 @@ interface SubmissionData {
 export const AllSubmissions = () => {
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const limit = 10;
 
   const fetchAllSubmissions = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8000/all-submissions");
+      const response = await fetch(`http://localhost:8000/all-submissions?page=${page}&limit=${limit}`);
       const data = await response.json();
-      setSubmissions(data);
+      setSubmissions(data.submissions);
+      setTotalPage(data.totalPage);
     } catch (error) {
       console.error("Error fetching submissions:", error);
       setSubmissions([]);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [page, setPage]);
 
   useEffect(() => {
     fetchAllSubmissions();
-  }, [fetchAllSubmissions]);
+  }, [fetchAllSubmissions, page, setPage]);
 
   const deleteSubmission = async (id: string) => {
     try {
@@ -119,6 +124,10 @@ export const AllSubmissions = () => {
           </Table>
         </div>
       </CardContent>
+
+      <CardFooter>
+        <PaginationComponent page={page} setPage={setPage} limit={limit} TotalPage={totalPage} />
+      </CardFooter>
     </Card>
   );
 };

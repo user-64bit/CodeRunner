@@ -33,10 +33,9 @@ export const StatusBadge = ({ status }: { status: string | number }) => {
   };
 
   const getStatusConfig = (status: string | number): StatusConfig => {
-    const statusKey = status.toString().toLowerCase();
+    const statusKey = status?.toString().toLowerCase();
     return statusMappings[statusKey] || { color: "bg-gray-100 text-gray-800", label: `Unknown (${status})` };
   };
-
   const { color, label } = getStatusConfig(status);
 
   return (

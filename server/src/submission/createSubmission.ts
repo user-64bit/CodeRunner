@@ -11,7 +11,7 @@ export const createSubmission = async ({
   codeValue,
   stdInput,
 }: Judge0SubmissionData) => {
-  const url = "https://judge0-ce.p.rapidapi.com/submissions?fields=*";
+  const url = "https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*";
   const options = {
     method: "POST",
     headers: {

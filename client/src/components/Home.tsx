@@ -13,24 +13,24 @@ const frameworks: {
   label: string;
 }[] = [
     {
-      value: "Cpp",
-      label: "C++",
+      value: "cpp",
+      label: "C++ (GCC 14.1.0)",
     },
     {
       value: "python3",
-      label: "Python3",
+      label: "Python (3.12.5)",
     },
     {
       value: "rust",
-      label: "Rust",
+      label: "Rust (1.40.0)",
     },
     {
       value: "java",
-      label: "Java",
+      label: "Java (JDK 17.0.6)",
     },
     {
       value: "javascript",
-      label: "JavaScript",
+      label: "JavaScript (Node.js 22.08.0)",
     },
   ]
 export const Home = () => {

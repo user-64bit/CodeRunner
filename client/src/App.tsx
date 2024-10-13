@@ -1,14 +1,14 @@
-import { Home } from "./components/Home"
+import { Outlet } from "react-router-dom"
 import { Navbar } from "./components/Navbar"
 
 function App() {
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div className="w-full max-w-6xl mx-auto">
       <div>
         <Navbar />
       </div>
-      <Home />
+      <Outlet />
     </div>
   )
 }
