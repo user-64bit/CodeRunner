@@ -37,13 +37,14 @@ export const Home = () => {
   const [codeValue, setCodeValue] = useState("")
   const [language, setLanguage] = useState("")
   const [stdInput, setStdInput] = useState("");
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-      const response = await fetch("http://localhost:8000/submit", {
+      const response = await fetch(`${BACKEND_URL}/submit`, {
         headers: {
           'Content-Type': 'application/json'
         },

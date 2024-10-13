@@ -30,11 +30,12 @@ export const AllSubmissions = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const limit = 10;
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
   const fetchAllSubmissions = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:8000/all-submissions?page=${page}&limit=${limit}`);
+      const response = await fetch(`${BACKEND_URL}/all-submissions?page=${page}&limit=${limit}`);
       const data = await response.json();
       setSubmissions(data.submissions);
       setTotalPage(data.totalPage);
@@ -52,7 +53,7 @@ export const AllSubmissions = () => {
 
   const deleteSubmission = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/delete-submission?id=${id}`);
+      const response = await fetch(`${BACKEND_URL}/delete-submission?id=${id}`);
       const data = await response.json();
       console.log(data);
       await fetchAllSubmissions();
