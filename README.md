@@ -9,10 +9,12 @@ CodeRunner is a web application that allows users to submit code snippets and ru
 
 ### Demo Video
 
-Without stdin:
+Without Input:
+
 ![Demo](CodeRunner.gif)
 
-With stdin:
+With Input:
+
 ![Demo](with-stdin.gif)
 ### How to run
 
